@@ -18,7 +18,7 @@ class FieldLevelAdmin(admin.ModelAdmin):
         fields inside fieldsets that the user has permission to view or change.
         """
         
-        # Get fieldsets from the ModeAdmin object
+        # Get fieldsets from the ModelAdmin object
         if self.declared_fieldsets:
             fieldsets = self.declared_fieldsets
         else:
@@ -41,12 +41,12 @@ class FieldLevelAdmin(admin.ModelAdmin):
         
         return fieldsets
     
-    def get_form(self, request, obj=None):
+    def get_form(self, request, obj=None, *args, **kwargs):
         """
         Returns a Form class (used by add_view and change_view) modified to only 
         include fields and inlines that the user has permissions to view.
         """
-        form = super(FieldLevelAdmin, self).get_form(request, obj)
+        form = super(FieldLevelAdmin, self).get_form(request, obj, *args, **kwargs)
         
         # Remove the fields that the user does not have permission to view.
         for field_name, field in form.base_fields.items():
